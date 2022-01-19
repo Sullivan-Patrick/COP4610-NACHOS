@@ -1,0 +1,1 @@
+b-) Running on single-stepping mode involves invoking the debugger after each instruction is executed. This way you can see the state of the machine. You can see the state of the registers, you can see if there are any pending interrupts on the queue, and you can also see how the clock ticks advance.
