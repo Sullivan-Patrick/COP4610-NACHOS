@@ -1,0 +1,2 @@
+A.Like most people I was having problems with accessing Nachos and connecting to the nachos.cs.fiu.edu host. I solve the issue by using ocelot. Using ocelot to retrieve nachos and build it went smoothly. I was able to compile it without any issues.
+B.Following the directions made it easy to perform the various test. The tread demo ran smoothly, and I received the correct output. The userprog demo also went smoothly and brought up the Nachos system and it ran a user program named halt under the test directory. 
