@@ -1,4 +1,4 @@
-Patrick Sullivan, Osniel Oliva, Leandro
+Patrick Sullivan, Osniel Oliva, Leandro Estevez
 
 COP4610 RVC 1221
 Professor Raju Rangaswami
@@ -9,8 +9,8 @@ Project 0 - Nachos Warmup
 a. Experience installing Nachos:
 Patrick attempted to install Nachos locally on his personal machine, an Ubuntu 20.04 desktop. First, he had to handle that Ubuntu doesn't use gmake by default. To circumvent this, he ended up setting a symbolic link to gmake from make. After this, he ran into an issue where bool.h was not available. After trying to install different versions of libstd.c and running into issues being able to do that, he decided to give up on the process. Patrick, Osniel, and Leandro all ended up downloading Nachos onto Ocelot, as it seemed the provided nachos server was unavailable, and the Ocelot CentOS build seemed to work without issue for these purposes.
 
-b. B.Following the directions made it easy to perform the various test. The tread demo ran smoothly, and I received the correct output. The userprog demo also went smoothly and brought up the Nachos system and it ran a user program named halt under the test directory. 
-
+b. Experience running tests:
+Following the directions made it easy to perform the tests outlined in the project 0 description. The thread demo ran smoothly, and Patrick, Osniel, and Leandro all received the expected output without issue. Running on single-stepping mode involves invoking the debugger after each instruction is executed. This way you can see the state of the machine. You can see the state of the registers, if there are any pending interrupts on the queue, and how the clock ticks advance.
 
 c. Description of thread class:
-The Thread constructor accepts a threadName arg which initializes aname variable, which names the thread for debugging purposes. The deconstructor makes sure that the process deallocating a thread is not running on that thread. Thread::Fork runs function func, and passes int arg to Thread::StackAllocate which sets machineState[InitialArgState] equal to the provided argument.
+Briefly, the Thread class imitates a thread. The Thread constructor accepts a threadName arg which initializes a name variable, which names the thread for debugging purposes. The deconstructor makes sure that the process deallocating a thread is not running on that thread. Thread::Fork runs function func, and passes int arg to Thread::StackAllocate which sets alters the state of the machine via machineState[InitialArgState].
