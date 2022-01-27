@@ -58,7 +58,7 @@ ThreadTest1()
 //----------------------------------------------------------------------
 
 void
-ThreadTest()
+ThreadTest(int n)
 {
     switch (testnum) {
     case 1:
