@@ -101,7 +101,7 @@ main(int argc, char **argv)
       }
     }
 
-    ThreadTest(0);
+    ThreadTest(4);
 #endif
 
     for (argc--, argv++; argc > 0; argc -= argCount, argv += argCount) {

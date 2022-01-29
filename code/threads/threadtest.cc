@@ -11,6 +11,8 @@
 
 #include "copyright.h"
 #include "system.h"
+#include "synch.h"
+
 
 // testnum is set in main.cc
 int testnum = 1;
@@ -24,13 +26,17 @@ int testnum = 1;
 //	purposes.
 //----------------------------------------------------------------------
 int SharedVariable;
+Semaphore *semaphore = new Semaphore("fred", 1);
 void SimpleThread(int which) {
 	int num, val;
 	for (num=0; num < 5; num++) {
+		semaphore->P();
 		val = SharedVariable;
 		printf("*** thread %d sees value %d\n", which, val);
-		currentThread->Yield();
+		//currentThread->Yield();
 		SharedVariable = val+1;
+		//currentThread->Yield();
+		semaphore->V();
 		currentThread->Yield();
 	}
 	val = SharedVariable;
@@ -67,6 +73,7 @@ ThreadTest(int n) {
 	
 	for (int i = 0; i < n; i++) {
 		ThreadTest1();
+		printf("iteration %d ended\n", i);
 	}
 
 }
