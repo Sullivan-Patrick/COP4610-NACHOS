@@ -16,6 +16,7 @@
 
 // testnum is set in main.cc
 int testnum = 1;
+int numThreadsActive;
 
 //----------------------------------------------------------------------
 // SimpleThread
@@ -27,18 +28,25 @@ int testnum = 1;
 //----------------------------------------------------------------------
 int SharedVariable;
 Semaphore *semaphore = new Semaphore("fred", 1);
+Semaphore *barrier = new Semaphore("tim", 0);
 void SimpleThread(int which) {
 	int num, val;
+
 	for (num=0; num < 5; num++) {
-		semaphore->P();
+	  semaphore->P();
 		val = SharedVariable;
 		printf("*** thread %d sees value %d\n", which, val);
-		//currentThread->Yield();
+		currentThread->Yield();
 		SharedVariable = val+1;
-		//currentThread->Yield();
+		if(num == 4) numThreadsActive--;
 		semaphore->V();
 		currentThread->Yield();
 	}
+	if (numThreadsActive > 0) {
+		barrier->P();
+	}
+	barrier->V();
+	
 	val = SharedVariable;
 	printf("Thread %d sees final value %d\n", which, val);
 }
@@ -65,19 +73,19 @@ ThreadTest1()
 // 	Invoke a test routine.
 //----------------------------------------------------------------------
 
-void
-ThreadTest(int n) {
-	if (n == 0){
-	 printf("no test specified.\n");	
-	}
-	
-	for (int i = 0; i < n; i++) {
-		ThreadTest1();
-		printf("iteration %d ended\n", i);
-	}
+void ThreadTest(int n) {
+	DEBUG('t', "Entering SimpleTest");
+	Thread *t;
+	numThreadsActive = n;
+	printf("NumThreadsActive = %d\n", numThreadsActive);
 
+	for(int i=1; i<n; i++)
+	{
+		t = new Thread("Forked thread");
+		t->Fork(SimpleThread,i);
+	}
+	SimpleThread(0);
 }
-
 
 //{
   //  switch (testnum) {
