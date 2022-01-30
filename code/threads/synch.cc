@@ -69,7 +69,7 @@ Semaphore::P()
     while (value == 0) { 			// semaphore not available
 	queue->Append((void *)currentThread);	// so go to sleep
 	currentThread->Sleep();
-    } 
+    }
     value--; 					// semaphore available, 
 						// consume its value
     
@@ -100,10 +100,46 @@ Semaphore::V()
 // Dummy functions -- so we can compile our later assignments 
 // Note -- without a correct implementation of Condition::Wait(), 
 // the test case in the network assignment won't work!
-Lock::Lock(const char* debugName) {}
-Lock::~Lock() {}
-void Lock::Acquire() {}
-void Lock::Release() {}
+Lock::Lock(const char* debugName) {
+    name = debugName;
+    isLocked = 0;
+    queue = new List;
+    //todo: add data structures we need
+}
+
+Lock::~Lock() {
+    // todo: 
+    delete name;
+    delete queue;
+}
+
+void Lock::Acquire() {
+    IntStatus oldLevel = interrupt->SetLevel(IntOff);
+    
+    if (!isLocked) {
+        isLocked = 1;
+    } else {
+        queue->Append((void *)currentThread);
+        currentThread->Sleep();
+    }
+
+    (void) interrupt->SetLevel(oldLevel);
+}
+
+void Lock::Release() {
+    Thread *thread;
+
+    IntStatus oldLevel = interrupt->SetLevel(IntOff);
+    if (queue->IsEmpty()) {
+        isLocked = 0;
+    } else {
+        thread = (Thread *)queue->Remove();
+        if (thread != NULL)	   // make thread ready, consuming the V immediately
+        scheduler->ReadyToRun(thread);
+    }
+
+    (void) interrupt->SetLevel(oldLevel);
+}
 
 Condition::Condition(const char* debugName) { }
 Condition::~Condition() { }
