@@ -104,11 +104,9 @@ Lock::Lock(const char* debugName) {
     name = debugName;
     isLocked = 0;
     queue = new List;
-    //todo: add data structures we need
 }
 
 Lock::~Lock() {
-    // todo: 
     delete name;
     delete queue;
 }

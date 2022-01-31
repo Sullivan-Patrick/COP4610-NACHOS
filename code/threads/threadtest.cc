@@ -27,19 +27,22 @@ int numThreadsActive;
 //	purposes.
 //----------------------------------------------------------------------
 int SharedVariable;
-Semaphore *semaphore = new Semaphore("fred", 1);
+//Semaphore *semaphore = new Semaphore("fred", 1);
 Semaphore *barrier = new Semaphore("tim", 0);
+Lock *lock = new Lock("brock the lock");
 void SimpleThread(int which) {
 	int num, val;
 
 	for (num=0; num < 5; num++) {
-	  semaphore->P();
+	  //semaphore->P();
+		lock->Acquire();
 		val = SharedVariable;
 		printf("*** thread %d sees value %d\n", which, val);
 		currentThread->Yield();
 		SharedVariable = val+1;
 		if(num == 4) numThreadsActive--;
-		semaphore->V();
+		//semaphore->V();
+		lock->Release();
 		currentThread->Yield();
 	}
 	if (numThreadsActive > 0) {
