@@ -9,6 +9,9 @@
 // All rights reserved.  See copyright.h for copyright notice and limitation 
 // of liability and disclaimer of warranty provisions.
 
+//#define HW1_SEMAPHORES
+#define HW1_LOCKS
+
 #include "copyright.h"
 #include "system.h"
 #include "synch.h"
@@ -27,29 +30,50 @@ int numThreadsActive;
 //	purposes.
 //----------------------------------------------------------------------
 int SharedVariable;
-//Semaphore *semaphore = new Semaphore("fred", 1);
+
+#ifdef HW1_SEMAPHORES
+Semaphore *semaphore = new Semaphore("fred", 1);
 Semaphore *barrier = new Semaphore("tim", 0);
+#endif
+
+#ifdef HW1_LOCKS
 Lock *lock = new Lock("brock the lock");
+#endif
+
 void SimpleThread(int which) {
 	int num, val;
 
 	for (num=0; num < 5; num++) {
-	  //semaphore->P();
+		#ifdef HW1_SEMAPHORES
+	  semaphore->P();
+    #endif
+
+		#ifdef HW1_LOCKS
 		lock->Acquire();
+		#endif
+
 		val = SharedVariable;
 		printf("*** thread %d sees value %d\n", which, val);
 		currentThread->Yield();
 		SharedVariable = val+1;
 		if(num == 4) numThreadsActive--;
-		//semaphore->V();
+		#ifdef HW1_SEMAPHORES
+		semaphore->V();
+		#endif
+
+		#ifdef HW1_LOCKS
 		lock->Release();
+		#endif
+
 		currentThread->Yield();
 	}
+	#ifdef HW1_SEMAPHORES
 	if (numThreadsActive > 0) {
 		barrier->P();
 	}
 	barrier->V();
-	
+	#endif
+
 	val = SharedVariable;
 	printf("Thread %d sees final value %d\n", which, val);
 }
