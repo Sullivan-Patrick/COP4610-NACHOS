@@ -1,16 +1,16 @@
-// threadtest.cc 
+// threadtest.cc
 //	Simple test case for the threads assignment.
 //
 //	Create two threads, and have them context switch
-//	back and forth between themselves by calling Thread::Yield, 
+//	back and forth between themselves by calling Thread::Yield,
 //	to illustratethe inner workings of the thread system.
 //
 // Copyright (c) 1992-1993 The Regents of the University of California.
-// All rights reserved.  See copyright.h for copyright notice and limitation 
+// All rights reserved.  See copyright.h for copyright notice and limitation
 // of liability and disclaimer of warranty provisions.
 
 //#define HW1_SEMAPHORES
-#define HW1_LOCKS
+// #define HW1_LOCKS
 
 #include "copyright.h"
 #include "system.h"
@@ -23,7 +23,7 @@ int numThreadsActive;
 
 //----------------------------------------------------------------------
 // SimpleThread
-// 	Loop 5 times, yielding the CPU to another ready thread 
+// 	Loop 5 times, yielding the CPU to another ready thread
 //	each iteration.
 //
 //	"which" is simply a number identifying the thread, for debugging
@@ -36,7 +36,7 @@ Semaphore *semaphore = new Semaphore("fred", 1);
 Semaphore *barrier = new Semaphore("tim", 0);
 #endif
 
-#ifdef HW1_LOCKS
+#ifdef DHW1_LOCKS
 Lock *lock = new Lock("brock the lock");
 #endif
 
@@ -48,7 +48,7 @@ void SimpleThread(int which) {
 	  semaphore->P();
     #endif
 
-		#ifdef HW1_LOCKS
+		#ifdef DHW1_LOCKS
 		lock->Acquire();
 		#endif
 
@@ -61,7 +61,7 @@ void SimpleThread(int which) {
 		semaphore->V();
 		#endif
 
-		#ifdef HW1_LOCKS
+		#ifdef DHW1_LOCKS
 		lock->Release();
 		#endif
 
@@ -80,7 +80,7 @@ void SimpleThread(int which) {
 
 //----------------------------------------------------------------------
 // ThreadTest1
-// 	Set up a ping-pong between two threads, by forking a thread 
+// 	Set up a ping-pong between two threads, by forking a thread
 //	to call SimpleThread, and then calling SimpleThread ourselves.
 //----------------------------------------------------------------------
 
