@@ -1,6 +1,6 @@
-// synch.cc 
+// synch.cc
 //	Routines for synchronizing threads.  Three kinds of
-//	synchronization routines are defined here: semaphores, locks 
+//	synchronization routines are defined here: semaphores, locks
 //   	and condition variables (the implementation of the last two
 //	are left to the reader).
 //
@@ -18,7 +18,7 @@
 // that be disabled or enabled).
 //
 // Copyright (c) 1992-1993 The Regents of the University of California.
-// All rights reserved.  See copyright.h for copyright notice and limitation 
+// All rights reserved.  See copyright.h for copyright notice and limitation
 // of liability and disclaimer of warranty provisions.
 
 #include "copyright.h"
@@ -65,14 +65,14 @@ void
 Semaphore::P()
 {
     IntStatus oldLevel = interrupt->SetLevel(IntOff);	// disable interrupts
-    
+
     while (value == 0) { 			// semaphore not available
 	queue->Append((void *)currentThread);	// so go to sleep
 	currentThread->Sleep();
     }
-    value--; 					// semaphore available, 
+    value--; 					// semaphore available,
 						// consume its value
-    
+
     (void) interrupt->SetLevel(oldLevel);	// re-enable interrupts
 }
 
@@ -97,8 +97,8 @@ Semaphore::V()
     (void) interrupt->SetLevel(oldLevel);
 }
 
-// Dummy functions -- so we can compile our later assignments 
-// Note -- without a correct implementation of Condition::Wait(), 
+// Dummy functions -- so we can compile our later assignments
+// Note -- without a correct implementation of Condition::Wait(),
 // the test case in the network assignment won't work!
 Lock::Lock(const char* debugName) {
     name = debugName;
@@ -113,7 +113,7 @@ Lock::~Lock() {
 
 void Lock::Acquire() {
     IntStatus oldLevel = interrupt->SetLevel(IntOff);
-    
+
     if (!isLocked) {
         isLocked = 1;
     } else {
@@ -139,8 +139,53 @@ void Lock::Release() {
     (void) interrupt->SetLevel(oldLevel);
 }
 
-Condition::Condition(const char* debugName) { }
-Condition::~Condition() { }
-void Condition::Wait(Lock* conditionLock) { ASSERT(FALSE); }
-void Condition::Signal(Lock* conditionLock) { }
-void Condition::Broadcast(Lock* conditionLock) { }
+Condition::Condition(const char* debugName) {
+    name = debugName; // init
+    queue =  new List;
+}
+Condition::~Condition() {
+    delete queue;
+}
+
+void Condition::Wait(Lock* conditionLock) {
+
+    // check if calling thread holds the lock
+    ASSERT(conditionLock->isHeldByCurrentThread());
+
+    // Release the lock
+    conditionLock->Release();
+
+    // put self in the queue of waiting threads
+    queue->Append((void *)currentThread);
+
+    // Re-acquire the lock
+    conditionLock->Acquire();
+
+}
+void Condition::Signal(Lock* conditionLock) {
+
+    // check if calling thread holds the lock
+    ASSERT(conditionLock->isHeldByCurrentThread());
+
+    // Dequeue one of the threads in the queue
+    Thread *thread;
+    thread = (Thread *)queue->Remove();
+    if (thread != NULL)
+    // If thread exists, wake it up.
+    scheduler->ReadyToRun(thread);
+
+}
+void Condition::Broadcast(Lock* conditionLock) {
+
+    // check if calling thread holds the lock
+    ASSERT(conditionLock->isHeldByCurrentThread());
+
+    // Dequeue all threads in the queue one-by-one
+    while(!queue->IsEmpty()) {
+        Thread *thread;
+        thread = (Thread *)queue->Remove();
+        if (thread != NULL)
+        // Wakeup each thread
+        scheduler->ReadyToRun(thread);
+    }
+}
