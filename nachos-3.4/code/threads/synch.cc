@@ -153,8 +153,12 @@ Condition::~Condition() {
 
 void Condition::Wait(Lock* conditionLock) {
 
+    
+
     // check if calling thread holds the lock
     ASSERT(conditionLock->isHeldByCurrentThread());
+
+    IntStatus oldLevel = interrupt->SetLevel(IntOff);
 
     // Release the lock
     conditionLock->Release();
