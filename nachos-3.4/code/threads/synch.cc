@@ -147,7 +147,9 @@ Condition::Condition(const char* debugName) {
     name = debugName; // init
     queue =  new List;
 }
+
 Condition::~Condition() {
+    delete name;
     delete queue;
 }
 
@@ -157,10 +159,12 @@ void Condition::Wait(Lock* conditionLock) {
     ASSERT(conditionLock->isHeldByCurrentThread());
 
     // Release the lock
+    IntStatus oldLevel = interrupt->SetLevel(IntOff);
     conditionLock->Release();
 
     // put self in the queue of waiting threads
     queue->Append((void *)currentThread);
+    currentThread->Sleep();
 
     // Re-acquire the lock
     conditionLock->Acquire();
@@ -174,8 +178,8 @@ void Condition::Signal(Lock* conditionLock) {
     // Dequeue one of the threads in the queue
     Thread *thread;
     thread = (Thread *)queue->Remove();
-    if (thread != NULL)
     // If thread exists, wake it up.
+    if (thread != NULL)
     scheduler->ReadyToRun(thread);
 
 }
