@@ -159,7 +159,7 @@ void Condition::Wait(Lock* conditionLock) {
     ASSERT(conditionLock->isHeldByCurrentThread());
 
     // Release the lock
-    IntStatus oldLevel = interrupt->SetLevel(IntOff);
+    interrupt->SetLevel(IntOff);
     conditionLock->Release();
 
     // put self in the queue of waiting threads
