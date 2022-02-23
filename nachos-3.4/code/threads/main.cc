@@ -59,6 +59,7 @@ extern int testnum;
 
 // External functions used by this file
 extern void Ping(void);
+extern void ElevatorTest(int numFloors, int numPersons);
 
 extern void ThreadTest(int n), Copy(char *unixFile, char *nachosFile);
 extern void Print(char *file), PerformanceTest(void);
@@ -103,7 +104,8 @@ main(int argc, char **argv)
     }
 
     // ThreadTest(4);
-		Ping();
+		// Ping();
+		ElevatorTest(5, 10);
 #endif
 
     for (argc--, argv++; argc > 0; argc -= argCount, argv += argCount) {
