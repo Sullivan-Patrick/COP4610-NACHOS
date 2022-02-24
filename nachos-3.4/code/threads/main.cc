@@ -104,8 +104,8 @@ main(int argc, char **argv)
     }
 
     // ThreadTest(4);
-		// Ping();
-		ElevatorTest(5, 10);
+		Ping();
+		// ElevatorTest(5, 10);
 #endif
 
     for (argc--, argv++; argc > 0; argc -= argCount, argv += argCount) {
