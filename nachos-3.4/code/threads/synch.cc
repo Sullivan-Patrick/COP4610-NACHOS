@@ -169,6 +169,8 @@ void Condition::Wait(Lock* conditionLock) {
     // Re-acquire the lock
     conditionLock->Acquire();
 
+    interrupt->SetLevel(IntOn);
+
 }
 void Condition::Signal(Lock* conditionLock) {
 
@@ -180,7 +182,7 @@ void Condition::Signal(Lock* conditionLock) {
     thread = (Thread *)queue->Remove();
     // If thread exists, wake it up.
     if (thread != NULL)
-    scheduler->ReadyToRun(thread);
+    scheduler->ReadyToRun(thread);  
 
 }
 void Condition::Broadcast(Lock* conditionLock) {
