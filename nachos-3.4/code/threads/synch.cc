@@ -145,7 +145,7 @@ bool Lock::isHeldByCurrentThread() {
 
 Condition::Condition(const char* debugName) {
     name = debugName; // init
-    queue =  new List;
+    queue = new List;
 }
 
 Condition::~Condition() {
@@ -163,6 +163,7 @@ void Condition::Wait(Lock* conditionLock) {
     conditionLock->Release();
 
     // put self in the queue of waiting threads
+    printf("%x", queue);
     queue->Append((void *)currentThread);
     currentThread->Sleep();
 
