@@ -59,6 +59,7 @@ extern int testnum;
 
 // External functions used by this file
 extern void SemaphorePing(void);
+extern void LockTest(void);
 extern void Ping(void);
 extern void ElevatorTest(int numFloors, int numPersons);
 
@@ -105,7 +106,8 @@ main(int argc, char **argv)
     }
 
     // ThreadTest(4);
-		SemaphorePing();
+		// SemaphorePing();
+		LockTest();
 		// Ping();
 		// ElevatorTest(5, 3);
 #endif
