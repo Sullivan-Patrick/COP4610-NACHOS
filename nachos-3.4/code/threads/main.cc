@@ -105,7 +105,7 @@ main(int argc, char **argv)
       }
     }
 
-    ThreadTest(0);
+    ThreadTest(1);
 		// SemaphorePing();
 		// LockTest();
 		// Ping();
