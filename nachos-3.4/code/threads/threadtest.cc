@@ -36,7 +36,7 @@ Semaphore *semaphore = new Semaphore("fred", 1);
 Semaphore *barrier = new Semaphore("tim", 0);
 #endif
 
-#ifdef DHW1_LOCKS
+#ifdef HW1_LOCKS
 Lock *lock = new Lock("brock the lock");
 #endif
 
@@ -48,7 +48,7 @@ void SimpleThread(int which) {
 	  semaphore->P();
     #endif
 
-		#ifdef DHW1_LOCKS
+		#ifdef HW1_LOCKS
 		lock->Acquire();
 		#endif
 
@@ -61,7 +61,7 @@ void SimpleThread(int which) {
 		semaphore->V();
 		#endif
 
-		#ifdef DHW1_LOCKS
+		#ifdef HW1_LOCKS
 		lock->Release();
 		#endif
 
