@@ -163,7 +163,6 @@ void Condition::Wait(Lock* conditionLock) {
     conditionLock->Release();
 
     // put self in the queue of waiting threads
-    printf("%x", queue);
     queue->Append((void *)currentThread);
     currentThread->Sleep();
 
@@ -183,7 +182,7 @@ void Condition::Signal(Lock* conditionLock) {
     thread = (Thread *)queue->Remove();
     // If thread exists, wake it up.
     if (thread != NULL)
-    scheduler->ReadyToRun(thread);  
+    scheduler->ReadyToRun(thread);
 
 }
 void Condition::Broadcast(Lock* conditionLock) {
