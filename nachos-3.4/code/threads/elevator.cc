@@ -9,7 +9,7 @@ Lock *personIDLock = new Lock("PersonIDLock");
 ELEVATOR *e;
 
 void ELEVATOR::start() {
-    maxOccupancy = 2;
+    maxOccupancy = 5;
     occupancy = 0;
 
     while(1) {

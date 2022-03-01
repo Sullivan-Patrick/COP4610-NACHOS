@@ -108,8 +108,8 @@ main(int argc, char **argv)
     // ThreadTest(1);
 		// SemaphorePing();
 		// LockTest();
-		Ping();
-		// ElevatorTest(5, 3);
+		// Ping();
+		ElevatorTest(7, 20);
 #endif
 
     for (argc--, argv++; argc > 0; argc -= argCount, argv += argCount) {
