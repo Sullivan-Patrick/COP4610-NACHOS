@@ -1,3 +1,21 @@
+Patrick Sullivan, Leandro Estevez, Osniel Oliva
+COP4610, Professor Raju Rangaswami
+Spring 2022
+
+~~~Before implementing semaphore changes~~~
 When arg is 0, Threadtest exits by design
-When arg is 1, a single parent and child process are created (threads 0 and 1). Thread 0 initially sets it’s local value val to 0 based off of SharedVariable’s value, then yields control to thread 1. Thread 1 then sets it’s own value to 0 based off SharedVariable, and yields back. Thread 0 then increments SharedVariable to 1, yields, and Thread 1 does the same. This continues, as both threads are only aware of SharedVariable’s state at the time it was captured locally. This results in SharedVariable only being incremented once despite 2 increment operations, and a final value of 5.
-When arg is 2 or greater, the order of events specified above occur for {arg} times. These events happen synchronously (one parent/child set of threads only starting after the previous set has completed it’s work) as arg only determines how many times the helper function ThreadTest1 runs. ThreadTest1 always spawns only 1 parent/child pair. SharedVariable, being in an outer scope, maintains its state and is therefore incremented 5 times for each extra thread.
+When arg is 1, a single parent and child process are created (threads 0 and 1). Thread 0 initially sets it’s local value val to 0 based off of SharedVariable’s value, then yields control to thread 1. Thread 1 then sets its own value to 0 based off SharedVariable, and yields back. Thread 0 then increments SharedVariable to 1, yields, and Thread 1 does the same. This continues, as both threads are only aware of SharedVariable’s state at the time it was captured locally. This results in SharedVariable only being incremented once despite 2 increment operations, and a final value of 5.
+When arg is 2 or greater, the order of events specified above occur for {arg} times. These events happen synchronously (one parent/child set of threads only starting after the previous set has completed its work) as arg only determines how many times the helper function ThreadTest1 runs. ThreadTest1 always spawns only 1 parent/child pair. SharedVariable, being in an outer scope, maintains its state and is therefore incremented 5 times for each extra thread.
+
+~~~Semaphore~~~
+Completed with output as anticipated.
+
+~~~Lock~~~
+Completed with output as anticipated.
+
+~~~Condition~~~
+Completed with output as anticipated.
+Note: we weren't sure about what to do with condition- without a preprocessor directive specified in the project specifications, we decided to add one so Ping() wouldn't run alongside any other test. Please use HW1_CONDITION to execute Condition test.
+
+~~~Elevator~~~
+Completed with output as anticipated.
