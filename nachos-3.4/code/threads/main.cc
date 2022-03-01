@@ -105,10 +105,10 @@ main(int argc, char **argv)
       }
     }
 
-    ThreadTest(1);
+    // ThreadTest(1);
 		// SemaphorePing();
 		// LockTest();
-		// Ping();
+		Ping();
 		// ElevatorTest(5, 3);
 #endif
 

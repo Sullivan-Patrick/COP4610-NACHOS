@@ -26,7 +26,7 @@
 # of liability and disclaimer of warranty provisions.
 
 # CFLAGS = -g -Wall -Wshadow -m32 $(INCPATH) $(DEFINES) $(HOST) -DCHANGED
-CFLAGS = -g -Wall -Wshadow -Wwrite-strings $(INCPATH) $(DEFINES) $(HOST) -DCHANGED
+CFLAGS = -g -Wall -Wshadow -Wwrite-strings $(INCPATH) $(DEFINES) $(HOST) -DCHANGED -DHW1_LOCKS
 
 # These definitions may change as the software is updated.
 # Some of them are also system dependent
@@ -59,9 +59,9 @@ THREAD_C =../threads/main.cc\
 	../threads/system.cc\
 	../threads/thread.cc\
 	../threads/utility.cc\
-	../threads/ping.cc \
 	../threads/elevator.cc \
 	../threads/ElevatorTest.cc \
+	../threads/ping.cc \
 	../threads/lockTest.cc \
 	../threads/sempahore_ping.cc \
 	../threads/threadtest.cc\
@@ -73,7 +73,7 @@ THREAD_C =../threads/main.cc\
 THREAD_S = ../threads/switch.s
 
 THREAD_O =main.o list.o scheduler.o synch.o synchlist.o system.o thread.o \
-	utility.o lockTest.o sempahore_ping.o threadtest.o interrupt.o stats.o sysdep.o timer.o ping.o \
+	utility.o ping.o lockTest.o sempahore_ping.o threadtest.o interrupt.o stats.o sysdep.o timer.o \
 	elevator.o ElevatorTest.o
 
 USERPROG_H = ../userprog/addrspace.h\
