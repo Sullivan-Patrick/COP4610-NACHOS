@@ -114,9 +114,9 @@ main(int argc, char **argv)
 		LockTest();
 		#endif
 
-		#ifdef HW1_CONDITION
+		// #ifdef HW1_CONDITION
 		Ping();
-		#endif
+		// #endif
 
 		#ifdef HW1_ELEVATOR
 		ElevatorTest(7, 20);
