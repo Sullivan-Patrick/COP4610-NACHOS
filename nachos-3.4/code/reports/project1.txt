@@ -19,3 +19,9 @@ Note: we weren't sure about what to do with condition- without a preprocessor di
 
 ~~~Elevator~~~
 Completed with output as anticipated.
+
+Leandro Estevez:
+Participated in office hours to clarify questions we had.
+Worked with Patrick and Osniel to plan out our time management for the propject.
+Worked together to create effective and efficient solutions for the projects.
+Debuged, wrote and executed code required for the project.
