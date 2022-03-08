@@ -26,6 +26,10 @@ Worked with Patrick and Osniel to plan out our time management for the propject.
 Worked together to create effective and efficient solutions for the projects.
 Debuged, wrote and executed code required for the project.
 
+Osniel Oliva
+Worked with Leandro and Patrick multiple times a week over zoom, coding and solving the 
+solutions for the project. Helped with testing the solutions and helped with spotting errors
+and reading the documentations provided.
 
 Patrick Sullivan
 Worked together with teammates to code and debug assignment, participated in office hours.
